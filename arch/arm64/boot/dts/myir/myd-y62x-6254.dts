@@ -14,5 +14,41 @@
 
 / {
 
-
+};
+&mcu_pmx0 {
+    mcu_mcan1_pins_default: mcu-mcan1-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x038, PIN_INPUT, 0) /* (B3) MCU_MCAN0_RX */
+			AM62X_IOPAD(0x034, PIN_OUTPUT, 0) /* (D6) MCU_MCAN0_TX */
+		>;
+	};
+	mcu_mcan2_pins_default: mcu-mcan2-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x040, PIN_INPUT, 0) /* (D4) MCU_MCAN1_RX */
+			AM62X_IOPAD(0x03C, PIN_OUTPUT, 0) /* (E5) MCU_MCAN1_TX */
+		>;
+	};
+    mcu_uart0_pins_default: mcu_uart0_pins_default {
+		pinctrl-single,pins = <
+            AM62X_MCU_IOPAD(0x001c, PIN_INPUT, 0) /* MCU_UART0_CTSn */
+            AM62X_MCU_IOPAD(0x0020, PIN_OUTPUT, 0) /* MCU_UART0_RTSn */
+            AM62X_MCU_IOPAD(0x0018, PIN_OUTPUT, 0) /* MCU_UART0_TXD */
+        >;
+	};
+};
+&mcu_mcan1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&mcu_mcan1_pins_default>;
+	status = "okay";
+};
+//开mcan2需要关mcu_gpio0里面的mcu_run_led_pins_default,mcu_wlan_reg_on_pins_default引脚复用
+&mcu_mcan2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&mcu_mcan2_pins_default>;
+	status = "okay";
+};
+&mcu_uart0 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&mcu_uart0_pins_default>;
 };

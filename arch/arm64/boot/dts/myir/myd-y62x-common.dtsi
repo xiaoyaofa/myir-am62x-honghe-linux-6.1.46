@@ -16,7 +16,10 @@
 		serial0 = &mcu_uart0;
 		serial2 = &main_uart0;
 		serial3 = &main_uart1;
+		serial4 = &main_uart2;
+		serial5 = &main_uart3;
 		serial6 = &main_uart4;
+		serial7 = &main_uart5;
 		serial8 = &main_uart6;
 		mmc0 = &sdhci0;
 		mmc1 = &sdhci1;
@@ -330,38 +333,68 @@
 
 	main_uart1_pins_default: main-uart1-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0194, PIN_INPUT, 2) /* (B19) MCASP0_AXR3.UART1_CTSn */
-			AM62X_IOPAD(0x0198, PIN_OUTPUT, 2) /* (A19) MCASP0_AXR2.UART1_RTSn */
 			AM62X_IOPAD(0x01ac, PIN_INPUT, 2) /* (E19) MCASP0_AFSR.UART1_RXD */
 			AM62X_IOPAD(0x01b0, PIN_OUTPUT, 2) /* (A20) MCASP0_ACLKR.UART1_TXD */
+			AM62X_IOPAD(0x0198, PIN_OUTPUT, 7) /* (A19) MCASP0_AXR2.UART1_RTSn.GPIO1_8 */
+		>;
+	};
+	// main_uart1_en_pins_default: main-uart1-en-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0198, PIN_OUTPUT, 7) /* (A19) MCASP0_AXR2.UART1_RTSn.GPIO1_8 */
+	// 	>;
+	// };
+
+	main_uart2_pins_default: main-uart2-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x00bc, PIN_OUTPUT, 4) /* (V24) VOUT0_DATA1.UART0_TXD */
+			AM62X_IOPAD(0x00b8, PIN_INPUT, 4) /* (U22) VOUT0_DATA0.UART0_RXD */
+			AM62X_IOPAD(0x00f0, PIN_OUTPUT, 7) /* (Y22) VOUT0_DATA14.GPIO0_59 */
+		>;
+	};
+
+	main_uart3_pins_default: main-uart3-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x00c4, PIN_OUTPUT, 4) /* (W24) VOUT0_DATA3.UART3_TXD */
+			AM62X_IOPAD(0x00c0, PIN_INPUT, 4) /* (W25) VOUT0_DATA2.UART3_RXD */
+			AM62X_IOPAD(0x00cc, PIN_OUTPUT, 7) /* (Y24) VOUT0_DATA5.GPIO0_50 */
 		>;
 	};
 
 	main_uart4_pins_default: main-uart4-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x00b0, PIN_INPUT, 3) /* (K22) GPMC0_CSn2.UART4_RXD */
 			AM62X_IOPAD(0x00b4, PIN_OUTPUT, 3) /* (K24) GPMC0_CSn3.UART4_TXD */
+			AM62X_IOPAD(0x00b0, PIN_INPUT, 3) /* (K22) GPMC0_CSn2.UART4_RXD */
+			AM62X_IOPAD(0x00e4, PIN_OUTPUT, 7) /* (AA23) VOUT0_DATA11.GPIO0_56 */
 		>;
 	};
 
-	main_uart4_rst_pins_default: main-uart4-rst-pins-default {
+	// main_uart4_rst_pins_default: main-uart4-rst-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0030, PIN_INPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
+	// 	>;
+	// };
+
+	main_uart5_pins_default: main-uart5-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0030, PIN_INPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
+			AM62X_IOPAD(0x00d4, PIN_OUTPUT, 4) /* (AA25) VOUT0_DATA7.UART5_TXD */
+			AM62X_IOPAD(0x00d0, PIN_INPUT, 4) /* (Y23) VOUT0_DATA6.UART5_RXD */
+			AM62X_IOPAD(0x00e8, PIN_OUTPUT, 7) /* (AB25) VOUT0_DATA12.GPIO0_57 */
 		>;
 	};
 
 	main_uart6_pins_default: main-uart6-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
 			AM62X_IOPAD(0x00a0, PIN_OUTPUT, 3) /* (K25) GPMC0_WPn.UART6_TXD */
+			AM62X_IOPAD(0x009c, PIN_INPUT, 3) /* (V25) GPMC0_WAIT1.UART6_RXD */
+			AM62X_IOPAD(0x00ec, PIN_OUTPUT, 7) /* (AA24) VOUT0_DATA13.GPIO0_58 */
 		>;
 	};
 
-	main_uart6_rst_pins_default: main-uart6-rst-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0258, PIN_INPUT, 7) /* (F18) USB1_DRVVBUS.GPIO1_51 */
-		>;
-	};
+	// main_uart6_rst_pins_default: main-uart6-rst-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0258, PIN_INPUT, 7) /* (F18) USB1_DRVVBUS.GPIO1_51 */
+	// 	>;
+	// };
 
 	main_i2c0_pins_default: main-i2c0-pins-default {
 		pinctrl-single,pins = <
@@ -444,6 +477,7 @@
 			AM62X_IOPAD(0x140, PIN_OUTPUT, 0) /* (AD18/AA18) RGMII1_TD3 */
 			AM62X_IOPAD(0x130, PIN_OUTPUT, 0) /* (AE19/W16) RGMII1_TXC */
 			AM62X_IOPAD(0x12c, PIN_OUTPUT, 0) /* (AD19/V15) RGMII1_TX_CTL */
+			AM62X_IOPAD(0x01a8, PIN_OUTPUT, 7) /* (D20) MCASP0_AFSX.GPIO1_12 */
 		>;
 	};
 
@@ -461,6 +495,7 @@
 			AM62X_IOPAD(0x178, PIN_OUTPUT, 0) /* (AC20) RGMII2_TD3 */
 			AM62X_IOPAD(0x168, PIN_OUTPUT, 0) /* (AE21) RGMII2_TXC */
 			AM62X_IOPAD(0x164, PIN_OUTPUT, 0) /* (AA19) RGMII2_TX_CTL */
+			AM62X_IOPAD(0x00d8, PIN_OUTPUT, 7) /* (V21) VOUT0_DATA8.GPIO0_53 */
 		>;
 	};
 
@@ -597,14 +632,27 @@
 &mcu_gpio0 {
 	pinctrl-names ="default";
 	pinctrl-0=<
-				&mcu_wlan_reg_on_pins_default 				
+				//&mcu_wlan_reg_on_pins_default 				
 				&mcu_lvds_power_pins_default
-				&mcu_run_led_pins_default>;
+				// &mcu_run_led_pins_default
+				>;
 	status = "okay";
 };
 
 &main_gpio0 {
 	pinctrl-names ="default";
+	pinctrl-0=<
+	
+	>;
+
+	status = "okay";
+};
+
+&main_gpio1 {
+	pinctrl-names ="default";
+	// pinctrl-0=<
+	// 	&main_uart1_en_pins_default
+	// >;
 
 	status = "okay";
 };
@@ -629,25 +677,47 @@
 	pinctrl-0 = <&main_uart1_pins_default>;
 	status = "okay";
 };
+&main_uart2 {
+	
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_uart2_pins_default>;
+	status = "okay";
+	// status = "disabled";
+};
+&main_uart3 {
+	
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_uart3_pins_default>;
+	status = "okay";
+	// status = "disabled";
+};
 
 &main_uart4 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&main_uart4_pins_default &main_uart4_rst_pins_default>;
-  rts-gpios = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
-	rs485-rx-during-tx;
-	rs485-rts-delay = <1 1>;
-	linux,rs485-enabled-at-boot-time;
+	// pinctrl-0 = <&main_uart4_pins_default &main_uart4_rst_pins_default>;
+	pinctrl-0 = <&main_uart4_pins_default>;
+  	// rts-gpios = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
+	// rs485-rx-during-tx;
+	// rs485-rts-delay = <1 1>;
+	// linux,rs485-enabled-at-boot-time;
 	status = "okay";
-
+	// status = "disabled";
+};
+&main_uart5 {
+	
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_uart5_pins_default>;
+	status = "okay";
 };
 
 &main_uart6 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&main_uart6_pins_default &main_uart6_rst_pins_default>;
-	rts-gpios = <&main_gpio1 51 GPIO_ACTIVE_HIGH>;
-	rs485-rx-during-tx;
-	rs485-rts-delay = <1 1>;
-	linux,rs485-enabled-at-boot-time;
+	// pinctrl-0 = <&main_uart6_pins_default &main_uart6_rst_pins_default>;
+	pinctrl-0 = <&main_uart6_pins_default>;
+	// rts-gpios = <&main_gpio1 51 GPIO_ACTIVE_HIGH>;
+	// rs485-rx-during-tx;
+	// rs485-rts-delay = <1 1>;
+	// linux,rs485-enabled-at-boot-time;
 	status = "okay";
 };
 
@@ -674,7 +744,8 @@
 		#sound-dai-cells = <0>;
 		compatible = "sil,sii9022";
 		reg = <0x3b>;
-		status = "okay";
+		// status = "okay";
+		status = "disabled";
 		iovcc-supply = <&vcc_3v3_sys>;
 		cvcc12-supply = <&vcc_1v8>;
 	
@@ -754,6 +825,12 @@
 		gpio_base = <530>;
 		interrupt-controller;
 		#interrupt-cells = <2>;
+		// status = "okay";
+		status = "disabled";
+	};
+	ksz8863: ksz8863@20 {
+		compatible = "microchip,ksz8863";
+		reg = <0x20>;
 		status = "okay";
 	};
 };
@@ -776,10 +853,10 @@
 	ptn5150: ptn5150@3d {
 		compatible = "nxp,ptn5150";
 		reg = <0x3d>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&main_ptn5150_vbus_pins_default>;
-		vbus-gpios = <&main_gpio1 50 GPIO_ACTIVE_HIGH>;
-		int-gpios = <&main_gpio0 71 IRQ_TYPE_EDGE_FALLING>;
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&main_ptn5150_vbus_pins_default>;
+		// vbus-gpios = <&main_gpio1 50 GPIO_ACTIVE_HIGH>;
+		// int-gpios = <&main_gpio0 71 IRQ_TYPE_EDGE_FALLING>;
 		status = "okay";
 
 		connector {
@@ -864,8 +941,9 @@
 &cpsw3g {
 	pinctrl-names = "default";
 	pinctrl-0 = <
-				 &main_rgmii1_pins_default
-		     &main_rgmii2_pins_default>;
+				&main_rgmii1_pins_default
+		     	&main_rgmii2_pins_default
+		    >;
 	status = "okay";
 };
 
@@ -873,28 +951,30 @@
 	phy-mode = "rgmii-rxid";
 	phy-handle = <&cpsw3g_phy0>;
 	status = "okay";
+	// status = "disabled";
 };
 
 &cpsw_port2 {
 	phy-mode = "rgmii-rxid";
 	phy-handle = <&cpsw3g_phy1>;
 	status = "okay";
+	// status = "disabled";
 };
 
 &cpsw3g_mdio {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mdio1_pins_default>;
-	cpsw3g_phy0: ethernet-phy@0 {
-		reg = <5>;
-		reset-gpios = <&at9555 5 GPIO_ACTIVE_LOW>;
+	cpsw3g_phy0: ethernet-phy@1 {
+		reg = <0x01>;
+		reset-gpios = <&main_gpio0 53 GPIO_ACTIVE_LOW>;//GPIO0_53
 		reset-assert-us = <10000>;
 		reset-deassert-us = <20000>;
 	};
 	
-	cpsw3g_phy1: ethernet-phy@1 {
-		reg = <1>;
-		reset-gpios = <&at9555 6 GPIO_ACTIVE_LOW>;
+	cpsw3g_phy1: ethernet-phy@2 {
+		reg = <0x02>;
+		reset-gpios = <&main_gpio1 12 GPIO_ACTIVE_LOW>;//GPIO1_12
 		reset-assert-us = <10000>;
 		reset-deassert-us = <20000>;
 	};
@@ -922,11 +1002,13 @@
 &dss {
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_dss0_pins_default>;
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 };
 
 &dss_ports {
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 	/* VP2: DPI Output */
 	port@1 {
 		reg = <1>;
@@ -938,7 +1020,8 @@
 };
 
 &mcasp0 {
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 	#sound-dai-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mcasp0_pins_default>;

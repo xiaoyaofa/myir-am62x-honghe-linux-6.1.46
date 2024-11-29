@@ -111,6 +111,10 @@ static const struct of_device_id ksz9477_dt_ids[] = {
 		.compatible = "microchip,ksz9567",
 		.data = &ksz_switch_chips[KSZ9567]
 	},
+	{
+		.compatible = "microchip,ksz8863",
+		.data = &ksz_switch_chips[KSZ8830]
+	},
 	{},
 };
 MODULE_DEVICE_TABLE(of, ksz9477_dt_ids);

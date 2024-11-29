@@ -171,3 +171,5 @@ sphinx_*/
 /rust-project.json
 
 /00_install
+/modules.sh
+/cpimage.sh
