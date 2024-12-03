@@ -232,16 +232,16 @@
 
 
 
-	hdmi: connector {
-		compatible = "hdmi-connector";
-		label = "hdmi";
-		type = "a";
-		port {
-			hdmi_connector_in: endpoint {
-				remote-endpoint = <&sii9022_out>;
-			};
-		};
-	};
+	// hdmi: connector {
+	// 	compatible = "hdmi-connector";
+	// 	label = "hdmi";
+	// 	type = "a";
+	// 	port {
+	// 		hdmi_connector_in: endpoint {
+	// 			remote-endpoint = <&sii9022_out>;
+	// 		};
+	// 	};
+	// };
 
 	clk_ov5640_fixed: ov5640-xclk {
 		compatible = "fixed-clock";
@@ -288,24 +288,33 @@
 	leds {
 		compatible = "gpio-leds";
 
-		led-user {
-			label = "am62-sk:d54";
-			gpios = <&at9555 4 GPIO_ACTIVE_LOW>;
-			max-brightness = <255>;
-			linux,default-trigger = "heartbeat";
-			function = LED_FUNCTION_HEARTBEAT;
-			default-state = "off";
-		};
+		// led-user {
+		// 	label = "am62-sk:d54";
+		// 	gpios = <&at9555 4 GPIO_ACTIVE_LOW>;
+		// 	max-brightness = <255>;
+		// 	linux,default-trigger = "heartbeat";
+		// 	function = LED_FUNCTION_HEARTBEAT;
+		// 	default-state = "off";
+		// };
 
-		led-sys {
-			label = "am62-sk:d53";
-			pinctrl-names = "default";
-			pinctrl-1 = <&mcu_run_led_pins_default>;
-			gpios = <&mcu_gpio0 16 GPIO_ACTIVE_LOW>;
-			linux,default-trigger = "heartbeat";
-			function = LED_FUNCTION_HEARTBEAT;
-			default-state = "on";
-		};
+		// led-sys {
+		// 	label = "am62-sk:d53";
+		// 	pinctrl-names = "default";
+		// 	pinctrl-1 = <&mcu_run_led_pins_default>;
+		// 	gpios = <&mcu_gpio0 16 GPIO_ACTIVE_LOW>;
+		// 	linux,default-trigger = "heartbeat";
+		// 	function = LED_FUNCTION_HEARTBEAT;
+		// 	default-state = "on";
+		// };
+		// gpio-lr {
+		// 	label = "gpio-lr";
+		// 	pinctrl-names = "default";
+		// 	pinctrl-1 = <&main_lvds0_gpio1_pins_default>;
+		// 	gpios = <&main_gpio1 11 GPIO_ACTIVE_LOW>;
+		// 	linux,default-trigger = "none";
+		// 	function = LED_FUNCTION_ACTIVITY;
+		// 	default-state = "on";
+		// };
 	};
 
 	gpio-keys {
@@ -588,6 +597,39 @@
 			AM62X_IOPAD(0x01dc, PIN_INPUT, 0) /* (E15) SoC_UART1_RIn.MCAN0_RX */
 		>;		
 	};
+
+	main_gpio0_dido_pins_default: main_gpio0_dido_pins_default{
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x00a8, PIN_OUTPUT, 7) /* (M21) GPMC0_CSn0.GPIO0_41.DO2 */
+			AM62X_IOPAD(0x0084, PIN_OUTPUT, 7) /* (L23) GPMC0_ADVn_ALE.GPIO0_32.DO4 */
+			AM62X_IOPAD(0x00c, PIN_OUTPUT, 7) /* (E25) OSPI0_D0.GPIO0_3.DO5 */
+			AM62X_IOPAD(0x018, PIN_OUTPUT, 7) /* (F24) OSPI0_D3.GPIO0_6.DO6 */
+			AM62X_IOPAD(0x01c, PIN_OUTPUT, 7) /* (J23) OSPI0_D4.GPIO0_7.DO7 */
+			AM62X_IOPAD(0x028, PIN_OUTPUT, 7) /* (J22) OSPI0_D7.GPIO0_10.DO8 */
+			AM62X_IOPAD(0x0034, PIN_INPUT, 7) /* (H21) OSPI0_CSn2.GPIO0_13.DI1 */
+			AM62X_IOPAD(0x0038, PIN_INPUT, 7) /* (E24) OSPI0_CSn3.GPIO0_14.DI2 */
+			AM62X_IOPAD(0x000, PIN_INPUT, 7) /* (H24) OSPI0_CLK.GPIO0_0.DI3 */
+			AM62X_IOPAD(0x020, PIN_INPUT, 7) /* (J25) OSPI0_D5.GPIO0_8.DI4 */
+			AM62X_IOPAD(0x008, PIN_INPUT, 7) /* (J24) OSPI0_DQS.GPIO0_2.DI5 */
+			AM62X_IOPAD(0x024, PIN_INPUT, 7) /* (H25) OSPI0_D6.GPIO0_9.DI6 */
+			AM62X_IOPAD(0x014, PIN_INPUT, 7) /* (F25) OSPI0_D2.GPIO0_5.DI7 */
+			AM62X_IOPAD(0x010, PIN_INPUT, 7) /* (G24) OSPI0_D1.GPIO0_4.DI8 */
+		>;
+	};
+
+	main_gpio1_dido_pins_default: main_gpio1_dido_pins_default{
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0258, PIN_OUTPUT, 7) /* (F18) USB1_DRVVBUS.GPIO1_51.DO1 */
+			AM62X_IOPAD(0x01b4, PIN_OUTPUT, 7) /* (A13) SoC_SPI0_CS0.GPIO1_15.DO3 */
+		>;	
+	};
+
+	main_lvds0_gpio1_pins_default: main_lvds0_gpio_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0194, PIN_OUTPUT, 7) /* (B19) SOC_UART1_CTSN.GPIO1_7.GPIO U/D */
+			AM62X_IOPAD(0x01a4, PIN_OUTPUT, 7) /* (B20) MCASP0_ACLKX.GPIO1_11.GPIO L/R */
+		>;
+	};
 };
 
 &mcu_pmx0 {
@@ -642,18 +684,19 @@
 &main_gpio0 {
 	pinctrl-names ="default";
 	pinctrl-0=<
-	
-	>;
+		&main_gpio0_dido_pins_default
+		>;
 
 	status = "okay";
 };
 
 &main_gpio1 {
 	pinctrl-names ="default";
-	// pinctrl-0=<
-	// 	&main_uart1_en_pins_default
-	// >;
-
+	pinctrl-0=<
+		&main_gpio1_dido_pins_default
+		&main_lvds0_gpio1_pins_default
+		>;
+	// gpios = <&main_gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 	status = "okay";
 };
 
@@ -739,47 +782,11 @@
 	pinctrl-0 = <&main_i2c0_pins_default>;
 	clock-frequency = <100000>;
 	status = "okay";
-	
-		sii9022: sii9022@3b {
-		#sound-dai-cells = <0>;
-		compatible = "sil,sii9022";
-		reg = <0x3b>;
-		// status = "okay";
-		status = "disabled";
-		iovcc-supply = <&vcc_3v3_sys>;
-		cvcc12-supply = <&vcc_1v8>;
-	
-		reset-gpios = <&at9555 1 GPIO_ACTIVE_LOW>;
-
-  
-
-		sil,i2s-data-lanes = < 0 >;
-
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-
-				sii9022_in: endpoint {
-					remote-endpoint = <&dpi1_out>;
-				};
-			};
-
-			port@1 {
-				reg = <1>;
-
-				sii9022_out: endpoint {
-					remote-endpoint = <&hdmi_connector_in>;
-				};
-			};
-		};
-	};
 
 	sgtl5000: audio-codec@a {
 		compatible = "fsl,sgtl5000";
-		status = "okay";
+		// status = "okay";
+		status = "disabled";
 		reg = <0xa>;
 		#sound-dai-cells = <0>;
 		clocks = <&sgtl5000_mclk>;
@@ -793,7 +800,8 @@
 	ov5640: camera@3c {
 		compatible = "ovti,ov5640";
 		reg = <0x3c>;
-		status = "okay";
+		// status = "okay";
+		status = "disabled";
 		clocks = <&clk_ov5640_fixed>;
 		clock-names = "xclk";
 		pinctrl-names ="default";
@@ -999,25 +1007,25 @@
 	status = "okay";
 };
 
-&dss {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_dss0_pins_default>;
-	// status = "okay";
-	status = "disabled";
-};
+// &dss {
+// 	pinctrl-names = "default";
+// 	pinctrl-0 = <&main_dss0_pins_default>;
+// 	// status = "okay";
+// 	status = "disabled";
+// };
 
-&dss_ports {
-	// status = "okay";
-	status = "disabled";
-	/* VP2: DPI Output */
-	port@1 {
-		reg = <1>;
+// &dss_ports {
+// 	// status = "okay";
+// 	status = "disabled";
+// 	/* VP2: DPI Output */
+// 	port@1 {
+// 		reg = <1>;
 
-		dpi1_out: endpoint {
-			remote-endpoint = <&sii9022_in>;
-		};
-	};
-};
+// 		dpi1_out: endpoint {
+// 			remote-endpoint = <&sii9022_in>;
+// 		};
+// 	};
+// };
 
 &mcasp0 {
 	// status = "okay";
@@ -1059,7 +1067,8 @@
 &ospi0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&ospi0_pins_default>;
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 	flash@0 {
 		compatible = "jedec,spi-nor";
 		reg = <0x0>;
@@ -1133,13 +1142,4 @@
 	pinctrl-0 = <&main_mcan0_pins_default>;
 	status = "okay";
 };
-
-
-
-
-
-
-
-
-
 
