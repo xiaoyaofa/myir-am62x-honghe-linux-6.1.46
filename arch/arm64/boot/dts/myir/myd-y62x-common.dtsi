@@ -895,12 +895,20 @@
 
 &sdhci1 {
 	/* SD/MMC */
-	vmmc-supply = <&vdd_mmc1>;
-	vqmmc-supply = <&vdd_sd_dv>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mmc1_pins_default>;
 	ti,driver-strength-ohm = <50>;
+	ti,otap-del-sel-legacy = <0x0>;
+	ti,otap-del-sel-mmc-hs = <0x0>;
+	ti,otap-del-sel-ddr52 = <0x5>;
+	ti,otap-del-sel-hs200 = <0x5>;
+	ti,itap-del-sel-legacy = <0xa>;
+	ti,itap-del-sel-mmc-hs = <0x1>;
+	ti,otap-del-sel-hs400 = <0x0>;
 	disable-wp;
+	non-removable;
+	ti,fails-without-test-cd;
+	no-1-8-v;
 	status = "okay";
 };
 
