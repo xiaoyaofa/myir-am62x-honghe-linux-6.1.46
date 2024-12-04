@@ -504,7 +504,13 @@
 			AM62X_IOPAD(0x178, PIN_OUTPUT, 0) /* (AC20) RGMII2_TD3 */
 			AM62X_IOPAD(0x168, PIN_OUTPUT, 0) /* (AE21) RGMII2_TXC */
 			AM62X_IOPAD(0x164, PIN_OUTPUT, 0) /* (AA19) RGMII2_TX_CTL */
-			AM62X_IOPAD(0x00d8, PIN_OUTPUT, 7) /* (V21) VOUT0_DATA8.GPIO0_53 */
+		>;
+	};
+
+	main_eth1_gpio_default: main_eth1_gpio_defaultdefault {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x00d8, PIN_OUTPUT, 7) /* (V21) VOUT0_DATA8.GPIO0_53.ETH1_RESET */
+			AM62X_IOPAD(0x00fc, PIN_OUTPUT, 7) /* (Y20) VOUT0_DE.GPIO0_62.ETH1_INT */
 		>;
 	};
 
@@ -627,7 +633,7 @@
 	main_lvds0_gpio1_pins_default: main_lvds0_gpio_pins_default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0194, PIN_OUTPUT, 7) /* (B19) SOC_UART1_CTSN.GPIO1_7.GPIO U/D */
-			AM62X_IOPAD(0x01a4, PIN_OUTPUT, 7) /* (B20) MCASP0_ACLKX.GPIO1_11.GPIO L/R */
+			AM62X_IOPAD(0x01a4, PIN_OUTPUT_PULLDOWN, 7) /* (B20) MCASP0_ACLKX.GPIO1_11.GPIO L/R */
 		>;
 	};
 };
@@ -685,6 +691,7 @@
 	pinctrl-names ="default";
 	pinctrl-0=<
 		&main_gpio0_dido_pins_default
+		&main_eth1_gpio_default
 		>;
 
 	status = "okay";
@@ -696,7 +703,6 @@
 		&main_gpio1_dido_pins_default
 		&main_lvds0_gpio1_pins_default
 		>;
-	// gpios = <&main_gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 	status = "okay";
 };
 
@@ -973,23 +979,24 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mdio1_pins_default>;
-	cpsw3g_phy0: ethernet-phy@1 {
-		reg = <0x01>;
-		reset-gpios = <&main_gpio0 53 GPIO_ACTIVE_LOW>;//GPIO0_53
+	cpsw3g_phy0: ethernet-phy@0 {
+		reg = <2>;
+		reset-gpios = <&main_gpio1 12 GPIO_ACTIVE_LOW>;//GPIO1_12
 		reset-assert-us = <10000>;
 		reset-deassert-us = <20000>;
 	};
 	
-	cpsw3g_phy1: ethernet-phy@2 {
-		reg = <0x02>;
-		reset-gpios = <&main_gpio1 12 GPIO_ACTIVE_LOW>;//GPIO1_12
+	cpsw3g_phy1: ethernet-phy@1 {
+		reg = <5>;
+		reset-gpios = <&main_gpio0 53 GPIO_ACTIVE_LOW>;//GPIO0_53
 		reset-assert-us = <10000>;
 		reset-deassert-us = <20000>;
 	};
 };
 
 &csi0_port0 {
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 
 	csi2rx0_in_sensor: endpoint {
 		remote-endpoint = <&csi2_cam0>;
@@ -1000,11 +1007,13 @@
 };
 
 &ti_csi2rx0 {
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 };
 
 &dphy0 {
-	status = "okay";
+	// status = "okay";
+	status = "disabled";
 };
 
 // &dss {
