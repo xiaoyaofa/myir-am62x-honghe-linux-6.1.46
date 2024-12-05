@@ -288,14 +288,24 @@
 	leds {
 		compatible = "gpio-leds";
 
-		// led-user {
-		// 	label = "am62-sk:d54";
-		// 	gpios = <&at9555 4 GPIO_ACTIVE_LOW>;
-		// 	max-brightness = <255>;
-		// 	linux,default-trigger = "heartbeat";
-		// 	function = LED_FUNCTION_HEARTBEAT;
-		// 	default-state = "off";
-		// };
+		led-run {
+			label = "led-run";
+			pinctrl-names = "default";
+			pinctrl-0 = <&main_run_led_pins_default>;
+			gpios = <&main_gpio0 55 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+			function = LED_FUNCTION_HEARTBEAT;
+			default-state = "on";
+		};
+		led-err {
+			label = "led-err";
+			pinctrl-names = "default";
+			pinctrl-0 = <&main_err_led_pins_default>;
+			gpios = <&main_gpio0 31 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+			function = LED_FUNCTION_HEARTBEAT;
+			default-state = "on";
+		};
 
 		// led-sys {
 		// 	label = "am62-sk:d53";
@@ -306,27 +316,28 @@
 		// 	function = LED_FUNCTION_HEARTBEAT;
 		// 	default-state = "on";
 		// };
-		// gpio-lr {
-		// 	label = "gpio-lr";
-		// 	pinctrl-names = "default";
-		// 	pinctrl-1 = <&main_lvds0_gpio1_pins_default>;
-		// 	gpios = <&main_gpio1 11 GPIO_ACTIVE_LOW>;
-		// 	linux,default-trigger = "none";
-		// 	function = LED_FUNCTION_ACTIVITY;
-		// 	default-state = "on";
-		// };
+		
 	};
 
-	gpio-keys {
-		compatible = "gpio-keys";
-		autorepeat;
-		pinctrl-names = "default";
-		pinctrl-0 = <&main_user_key_pins_default>;
+	// gpio-keys {
+		// compatible = "gpio-keys";
+		// autorepeat;
+		// pinctrl-names = "default";
+		// pinctrl-0 = <&main_user_key_pins_default>;
 
-		user: user {
-			label = "GPIO Key USER1";
-			linux,code = <BTN_0>;
-			gpios = <&main_gpio0 36 GPIO_ACTIVE_LOW>;
+		// user: user {
+		// 	label = "GPIO Key USER1";
+		// 	linux,code = <BTN_0>;
+		// 	gpios = <&main_gpio0 36 GPIO_ACTIVE_LOW>;
+		// };
+	// };
+	connector {
+		compatible = "usb-c-connector";
+		label = "USB-C";
+		port {
+			con_usbotg_hs_ep: endpoint {
+				remote-endpoint = <&usbotg_hs_ep>;
+			};
 		};
 	};
 };
@@ -531,38 +542,38 @@
 		>;
 	};
 
-	main_dss0_pins_default: main-dss0-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0100, PIN_OUTPUT, 0) /* (AC25) VOUT0_VSYNC */
-			AM62X_IOPAD(0x00f8, PIN_OUTPUT, 0) /* (AB24) VOUT0_HSYNC */
-			AM62X_IOPAD(0x0104, PIN_OUTPUT, 0) /* (AC24) VOUT0_PCLK */
-			AM62X_IOPAD(0x00fc, PIN_OUTPUT, 0) /* (Y20) VOUT0_DE */
-			AM62X_IOPAD(0x00b8, PIN_OUTPUT, 0) /* (U22) VOUT0_DATA0 */
-			AM62X_IOPAD(0x00bc, PIN_OUTPUT, 0) /* (V24) VOUT0_DATA1 */
-			AM62X_IOPAD(0x00c0, PIN_OUTPUT, 0) /* (W25) VOUT0_DATA2 */
-			AM62X_IOPAD(0x00c4, PIN_OUTPUT, 0) /* (W24) VOUT0_DATA3 */
-			AM62X_IOPAD(0x00c8, PIN_OUTPUT, 0) /* (Y25) VOUT0_DATA4 */
-			AM62X_IOPAD(0x00cc, PIN_OUTPUT, 0) /* (Y24) VOUT0_DATA5 */
-			AM62X_IOPAD(0x00d0, PIN_OUTPUT, 0) /* (Y23) VOUT0_DATA6 */
-			AM62X_IOPAD(0x00d4, PIN_OUTPUT, 0) /* (AA25) VOUT0_DATA7 */
-			AM62X_IOPAD(0x00d8, PIN_OUTPUT, 0) /* (V21) VOUT0_DATA8 */
-			AM62X_IOPAD(0x00dc, PIN_OUTPUT, 0) /* (W21) VOUT0_DATA9 */
-			AM62X_IOPAD(0x00e0, PIN_OUTPUT, 0) /* (V20) VOUT0_DATA10 */
-			AM62X_IOPAD(0x00e4, PIN_OUTPUT, 0) /* (AA23) VOUT0_DATA11 */
-			AM62X_IOPAD(0x00e8, PIN_OUTPUT, 0) /* (AB25) VOUT0_DATA12 */
-			AM62X_IOPAD(0x00ec, PIN_OUTPUT, 0) /* (AA24) VOUT0_DATA13 */
-			AM62X_IOPAD(0x00f0, PIN_OUTPUT, 0) /* (Y22) VOUT0_DATA14 */
-			AM62X_IOPAD(0x00f4, PIN_OUTPUT, 0) /* (AA21) VOUT0_DATA15 */
-			AM62X_IOPAD(0x005c, PIN_OUTPUT, 1) /* (R24) GPMC0_AD8.VOUT0_DATA16 */
-			AM62X_IOPAD(0x0060, PIN_OUTPUT, 1) /* (R25) GPMC0_AD9.VOUT0_DATA17 */
-			AM62X_IOPAD(0x0064, PIN_OUTPUT, 1) /* (T25) GPMC0_AD10.VOUT0_DATA18 */
-			AM62X_IOPAD(0x0068, PIN_OUTPUT, 1) /* (R21) GPMC0_AD11.VOUT0_DATA19 */
-			AM62X_IOPAD(0x006c, PIN_OUTPUT, 1) /* (T22) GPMC0_AD12.VOUT0_DATA20 */
-			AM62X_IOPAD(0x0070, PIN_OUTPUT, 1) /* (T24) GPMC0_AD13.VOUT0_DATA21 */
-			AM62X_IOPAD(0x0074, PIN_OUTPUT, 1) /* (U25) GPMC0_AD14.VOUT0_DATA22 */
-			AM62X_IOPAD(0x0078, PIN_OUTPUT, 1) /* (U24) GPMC0_AD15.VOUT0_DATA23 */
-		>;
-	};
+	// main_dss0_pins_default: main-dss0-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x0100, PIN_OUTPUT, 0) /* (AC25) VOUT0_VSYNC */
+	// 		AM62X_IOPAD(0x00f8, PIN_OUTPUT, 0) /* (AB24) VOUT0_HSYNC */
+	// 		AM62X_IOPAD(0x0104, PIN_OUTPUT, 0) /* (AC24) VOUT0_PCLK */
+	// 		AM62X_IOPAD(0x00fc, PIN_OUTPUT, 0) /* (Y20) VOUT0_DE */
+	// 		AM62X_IOPAD(0x00b8, PIN_OUTPUT, 0) /* (U22) VOUT0_DATA0 */
+	// 		AM62X_IOPAD(0x00bc, PIN_OUTPUT, 0) /* (V24) VOUT0_DATA1 */
+	// 		AM62X_IOPAD(0x00c0, PIN_OUTPUT, 0) /* (W25) VOUT0_DATA2 */
+	// 		AM62X_IOPAD(0x00c4, PIN_OUTPUT, 0) /* (W24) VOUT0_DATA3 */
+	// 		AM62X_IOPAD(0x00c8, PIN_OUTPUT, 0) /* (Y25) VOUT0_DATA4 */
+	// 		AM62X_IOPAD(0x00cc, PIN_OUTPUT, 0) /* (Y24) VOUT0_DATA5 */
+	// 		AM62X_IOPAD(0x00d0, PIN_OUTPUT, 0) /* (Y23) VOUT0_DATA6 */
+	// 		AM62X_IOPAD(0x00d4, PIN_OUTPUT, 0) /* (AA25) VOUT0_DATA7 */
+	// 		AM62X_IOPAD(0x00d8, PIN_OUTPUT, 0) /* (V21) VOUT0_DATA8 */
+	// 		AM62X_IOPAD(0x00dc, PIN_OUTPUT, 0) /* (W21) VOUT0_DATA9 */
+	// 		AM62X_IOPAD(0x00e0, PIN_OUTPUT, 0) /* (V20) VOUT0_DATA10 */
+	// 		AM62X_IOPAD(0x00e4, PIN_OUTPUT, 0) /* (AA23) VOUT0_DATA11 */
+	// 		AM62X_IOPAD(0x00e8, PIN_OUTPUT, 0) /* (AB25) VOUT0_DATA12 */
+	// 		AM62X_IOPAD(0x00ec, PIN_OUTPUT, 0) /* (AA24) VOUT0_DATA13 */
+	// 		AM62X_IOPAD(0x00f0, PIN_OUTPUT, 0) /* (Y22) VOUT0_DATA14 */
+	// 		AM62X_IOPAD(0x00f4, PIN_OUTPUT, 0) /* (AA21) VOUT0_DATA15 */
+	// 		AM62X_IOPAD(0x005c, PIN_OUTPUT, 1) /* (R24) GPMC0_AD8.VOUT0_DATA16 */
+	// 		AM62X_IOPAD(0x0060, PIN_OUTPUT, 1) /* (R25) GPMC0_AD9.VOUT0_DATA17 */
+	// 		AM62X_IOPAD(0x0064, PIN_OUTPUT, 1) /* (T25) GPMC0_AD10.VOUT0_DATA18 */
+	// 		AM62X_IOPAD(0x0068, PIN_OUTPUT, 1) /* (R21) GPMC0_AD11.VOUT0_DATA19 */
+	// 		AM62X_IOPAD(0x006c, PIN_OUTPUT, 1) /* (T22) GPMC0_AD12.VOUT0_DATA20 */
+	// 		AM62X_IOPAD(0x0070, PIN_OUTPUT, 1) /* (T24) GPMC0_AD13.VOUT0_DATA21 */
+	// 		AM62X_IOPAD(0x0074, PIN_OUTPUT, 1) /* (U25) GPMC0_AD14.VOUT0_DATA22 */
+	// 		AM62X_IOPAD(0x0078, PIN_OUTPUT, 1) /* (U24) GPMC0_AD15.VOUT0_DATA23 */
+	// 	>;
+	// };
 
 
 
@@ -636,6 +647,27 @@
 			AM62X_IOPAD(0x01a4, PIN_OUTPUT_PULLDOWN, 7) /* (B20) MCASP0_ACLKX.GPIO1_11.GPIO L/R */
 		>;
 	};
+	main_rtc_int_pins_default: main_rtc_int_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x02c, PIN_INPUT, 7) /* (F23) OSPI0_CSn0.GPIO0_11 */
+		>;
+	};
+	main_run_led_pins_default: main_rtc_int_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x00e0, PIN_OUTPUT, 7) /* (V20) VOUT0_DATA10.GPIO0_55 */
+		>;
+	};
+	main_err_led_pins_default: main_rtc_int_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x07c, PIN_OUTPUT, 7) /* (P25) GPMC0_CLK.GPIO0_31 */	
+		>;
+	};
+	main_4g_gpio_pins_default: main_4g_gpio_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0104, PIN_OUTPUT, 7) /* (AC24) VOUT0_PCLK.GPIO0_64.4G_RESET */
+			AM62X_IOPAD(0x00f8, PIN_OUTPUT, 7) /* (AB24) VOUT0_HSYNC.GPIO0_61.4G_WAKEUP */
+		>;
+	};
 };
 
 &mcu_pmx0 {
@@ -664,11 +696,11 @@
 		>;
 	};
 	
-	mcu_run_led_pins_default: mymcugpio1-pins-default {
-		pinctrl-single,pins = <
-			AM62X_MCU_IOPAD(0x0040, PIN_INPUT, 7) /* (D4) MCU_MCAN1_RX.MCU_GPIO0_16 */
-		>;
-	};
+	// mcu_run_led_pins_default: mymcugpio1-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_MCU_IOPAD(0x0040, PIN_INPUT, 7) /* (D4) MCU_MCAN1_RX.MCU_GPIO0_16 */
+	// 	>;
+	// };
 	mcu_ov5640_gpio_pins_default: mcu-ov5640-gpio-pins-default {
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0000, PIN_OUTPUT, 7) /* (E8) MCU_SPI0_CS0.MCU_GPIO0_0  RST */
@@ -692,6 +724,10 @@
 	pinctrl-0=<
 		&main_gpio0_dido_pins_default
 		&main_eth1_gpio_default
+		&main_rtc_int_pins_default
+		&main_run_led_pins_default
+		&main_err_led_pins_default
+		&main_4g_gpio_pins_default
 		>;
 
 	status = "okay";
@@ -871,17 +907,18 @@
 		// pinctrl-0 = <&main_ptn5150_vbus_pins_default>;
 		// vbus-gpios = <&main_gpio1 50 GPIO_ACTIVE_HIGH>;
 		// int-gpios = <&main_gpio0 71 IRQ_TYPE_EDGE_FALLING>;
-		status = "okay";
+		// status = "okay";
+		status = "disabled";
 
-		connector {
-			compatible = "usb-c-connector";
-			label = "USB-C";
-			port {
-				con_usbotg_hs_ep: endpoint {
-					remote-endpoint = <&usbotg_hs_ep>;
-				};
-			};
-		};
+		// connector {
+		// 	compatible = "usb-c-connector";
+		// 	label = "USB-C";
+		// 	port {
+		// 		con_usbotg_hs_ep: endpoint {
+		// 			remote-endpoint = <&usbotg_hs_ep>;
+		// 		};
+		// 	};
+		// };
 	};
 };
 
@@ -932,8 +969,8 @@
 
 
 &usbss0 {
-        status = "okay";
-        ti,vbus-divider;
+	status = "okay";
+	ti,vbus-divider;
 };
 &usbss1 {
 	status = "okay";

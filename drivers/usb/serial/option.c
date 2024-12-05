@@ -48,6 +48,8 @@ static void option_release(struct usb_serial *serial);
 static void option_instat_callback(struct urb *urb);
 
 /* Vendor and product IDs */
+#define ASR_VENDOR_ID		0x1286
+#define YUGA_PRODUCT_JD3	0x4E3C
 #define OPTION_VENDOR_ID			0x0AF0
 #define OPTION_PRODUCT_COLT			0x5000
 #define OPTION_PRODUCT_RICOLA			0x6000
@@ -625,6 +627,9 @@ static void option_instat_callback(struct urb *urb);
 
 
 static const struct usb_device_id option_ids[] = {
+	/* Yuga products use ASR vendor ID*/
+	{ USB_DEVICE(ASR_VENDOR_ID, YUGA_PRODUCT_JD3),
+	  .driver_info = RSVD(0) | RSVD(1) },
 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
 	{ USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
