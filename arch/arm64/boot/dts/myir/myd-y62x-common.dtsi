@@ -29,6 +29,7 @@
 		ethernet1 = &cpsw_port2;
 		usb0 = &usb0;
 		usb1 = &usb1;
+		rtc0 = &rtc;
 	};
 
 	chosen {
@@ -190,7 +191,9 @@
 		vin-supply = <&vcc_3v3_sys>;
 		pinctrl-names = "default";
 		pinctrl-1 = <&mcu_wlan_reg_on_pins_default>;
-		gpios = <&mcu_gpio0 15 GPIO_ACTIVE_HIGH>;
+		// pinctrl-0 = <&main_wifi_en_pins_default>;
+		// gpios = <&mcu_gpio0 15 GPIO_ACTIVE_HIGH>;
+		// gpios = <&main_gpio0 12 GPIO_ACTIVE_HIGH>;
 	};
 
 	vcc_1v8: regulator-5 {
@@ -388,12 +391,6 @@
 		>;
 	};
 
-	// main_uart4_rst_pins_default: main-uart4-rst-pins-default {
-	// 	pinctrl-single,pins = <
-	// 		AM62X_IOPAD(0x0030, PIN_INPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
-	// 	>;
-	// };
-
 	main_uart5_pins_default: main-uart5-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x00d4, PIN_OUTPUT, 4) /* (AA25) VOUT0_DATA7.UART5_TXD */
@@ -483,21 +480,31 @@
 		>;
 	};
 
-	main_rgmii1_pins_default: main-rgmii1-pins-default {
+	main_rmii1_pins_default: main_rmii1_pins_default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x14c, PIN_INPUT, 0) /* (AB17/W15) RGMII1_RD0 */
-			AM62X_IOPAD(0x150, PIN_INPUT, 0) /* (AC17/Y16) RGMII1_RD1 */
-			AM62X_IOPAD(0x154, PIN_INPUT, 0) /* (AB16/AA17) RGMII1_RD2 */
-			AM62X_IOPAD(0x158, PIN_INPUT, 0) /* (AA15/Y15) RGMII1_RD3 */
-			AM62X_IOPAD(0x148, PIN_INPUT, 0) /* (AD17/AA16) RGMII1_RXC */
-			AM62X_IOPAD(0x144, PIN_INPUT, 0) /* (AE17/W14) RGMII1_RX_CTL */
-			AM62X_IOPAD(0x134, PIN_OUTPUT, 0) /* (AE20/U14) RGMII1_TD0 */
-			AM62X_IOPAD(0x138, PIN_OUTPUT, 0) /* (AD20/AA19) RGMII1_TD1 */
-			AM62X_IOPAD(0x13c, PIN_OUTPUT, 0) /* (AE18/Y17) RGMII1_TD2 */
-			AM62X_IOPAD(0x140, PIN_OUTPUT, 0) /* (AD18/AA18) RGMII1_TD3 */
-			AM62X_IOPAD(0x130, PIN_OUTPUT, 0) /* (AE19/W16) RGMII1_TXC */
-			AM62X_IOPAD(0x12c, PIN_OUTPUT, 0) /* (AD19/V15) RGMII1_TX_CTL */
+			AM62X_IOPAD(0x14c, PIN_INPUT, 1) /* (AB17/W15) RGMII1_RD0.RMII1_RXD0 */
+			AM62X_IOPAD(0x150, PIN_INPUT, 1) /* (AC17/Y16) RGMII1_RD1.RMII1_RXD1 */
+			// AM62X_IOPAD(0x154, PIN_INPUT, 0) /* (AB16/AA17) RGMII1_RD2 */
+			// AM62X_IOPAD(0x158, PIN_INPUT, 0) /* (AA15/Y15) RGMII1_RD3 */
+			AM62X_IOPAD(0x148, PIN_INPUT, 1) /* (AD17/AA16) RGMII1_RXC.RMII1_REF_CL */
+			AM62X_IOPAD(0x144, PIN_INPUT, 1) /* (AE17/W14) RGMII1_RX_CTL.RMII1_RX_ER */
+			AM62X_IOPAD(0x134, PIN_OUTPUT, 1) /* (AE20/U14) RGMII1_TD0.RMII1_TXD0 */
+			AM62X_IOPAD(0x138, PIN_OUTPUT, 1) /* (AD20/AA19) RGMII1_TD1.RMII1_TXD1 */
+			// AM62X_IOPAD(0x13c, PIN_OUTPUT, 0) /* (AE18/Y17) RGMII1_TD2 */
+			// AM62X_IOPAD(0x140, PIN_OUTPUT, 0) /* (AD18/AA18) RGMII1_TD3 */
+			AM62X_IOPAD(0x130, PIN_OUTPUT, 1) /* (AE19/W16) RGMII1_TXC.RMII1_CRS_DV */
+			AM62X_IOPAD(0x12c, PIN_OUTPUT, 1) /* (AD19/V15) RGMII1_TX_CTL.RMII1_TX_EN */
+		>;
+	};
+
+	main_ksz8863_reset_default: main_ksz8863_reset_default {
+		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01a8, PIN_OUTPUT, 7) /* (D20) MCASP0_AFSX.GPIO1_12 */
+		>;
+	};
+	main_ksz8863_int_default: main_ksz8863_int_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x254, PIN_INPUT, 7) /* (C20) USB0_DRVVBUS.GPIO1_50 */
 		>;
 	};
 
@@ -595,13 +602,13 @@
 		>;
 	};
 
-	main_ptn5150_vbus_pins_default: main-ptn5150-vbus-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x254, PIN_OUTPUT, 7) /* (C20) USB0_DRVVBUS.GPIO1_50 */
-			AM62X_IOPAD(0x124, PIN_INPUT, 7) /* (A23) MMC2_SDCD.GPIO0_71 */
+	// main_ptn5150_vbus_pins_default: main-ptn5150-vbus-pins-default {
+	// 	pinctrl-single,pins = <
+	// 		AM62X_IOPAD(0x254, PIN_OUTPUT, 7) /* (C20) USB0_DRVVBUS.GPIO1_50 */
+	// 		AM62X_IOPAD(0x124, PIN_INPUT, 7) /* (A23) MMC2_SDCD.GPIO0_71 */
 
-		>;
-	};
+	// 	>;
+	// };
 	main_user_key_pins_default: main-user-key-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0094, PIN_INPUT, 7) /* (N20) GPMC0_BE1n.GPIO0_36 */
@@ -668,6 +675,11 @@
 			AM62X_IOPAD(0x00f8, PIN_OUTPUT, 7) /* (AB24) VOUT0_HSYNC.GPIO0_61.4G_WAKEUP */
 		>;
 	};
+	main_wifi_en_pins_default: main_wifi_en_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0030, PIN_OUTPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
+		>;
+	};
 };
 
 &mcu_pmx0 {
@@ -728,8 +740,8 @@
 		&main_run_led_pins_default
 		&main_err_led_pins_default
 		&main_4g_gpio_pins_default
+		&main_wifi_en_pins_default
 		>;
-
 	status = "okay";
 };
 
@@ -738,6 +750,8 @@
 	pinctrl-0=<
 		&main_gpio1_dido_pins_default
 		&main_lvds0_gpio1_pins_default
+		&main_ksz8863_reset_default
+		&main_ksz8863_int_default
 		>;
 	status = "okay";
 };
@@ -878,10 +892,44 @@
 		// status = "okay";
 		status = "disabled";
 	};
-	ksz8863: ksz8863@20 {
+	ksz8863: ksz8863@5f {
 		compatible = "microchip,ksz8863";
-		reg = <0x20>;
+		reg = <0x5f>;
+		// pinctrl-0 = <&main_ksz8863_reset_default>;
+		reset-gpio = <&main_gpio1 12 GPIO_ACTIVE_LOW>;//GPIO1_12
+		// interrupt-parent = <&main_gpio1>;
+		// interrupts = <50 IRQ_TYPE_EDGE_FALLING>;
 		status = "okay";
+		// status = "disabled";
+		// microchip,synclko-disable;
+		// microchip,synclko-125;
+		microchip,synclko-disable;
+		ethernet-ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			port@0 {
+				reg = <0>;
+				label = "lan1";
+				// phy-mode = "rmii";
+			};
+			port@1 {
+				reg = <1>;
+				label = "lan2";
+				// phy-mode = "rmii";
+			};
+			port@2 {
+				reg = <2>;
+				ethernet = <&cpsw3g>;
+				phy-mode = "rmii";
+				fixed-link {
+					label = "cpu";
+					speed = <100>;
+					full-duplex;
+					// link-gpios=<&main_gpio1 50 GPIO_ACTIVE_HIGH>;
+					pause;
+				};
+			};
+		};
 	};
 };
 
@@ -895,7 +943,7 @@
 	clock-frequency = <400000>;
 	status = "okay";
 	rtc: rtc@32 {
-		compatible = "ti,am62-rtc";
+		compatible = "whwave,sd3078";
 		reg = <0x32>;
 		status = "okay";
     };
@@ -950,23 +998,21 @@
 };
 
 &sdhci2 {
-	vmmc-supply = <&wlan_reg_on>;
-	vqmmc-supply = <&vdd_wl_dv>;
-	no-1-8-v;
+	status = "okay";
+	// vmmc-supply = <&vcc_3v3_sys>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mmc2_pins_default>;
 	bus-width = <4>;
-	non-removable;
+	no-1-8-v;
+	broken-cd;
+	// non-removable;
 	ti,fails-without-test-cd;
-	cap-power-off-card;
-	keep-power-in-suspend;
-	ti,driver-strength-ohm = <50>;
-	disable-wp;
 	assigned-clocks = <&k3_clks 157 158>;
 	assigned-clock-parents = <&k3_clks 157 160>;
-	status = "okay";
+	cap-sd-highspeed;
+	no-mmc;
+	no-sd;
 };
-
 
 &usbss0 {
 	status = "okay";
@@ -1000,17 +1046,25 @@
 &cpsw3g {
 	pinctrl-names = "default";
 	pinctrl-0 = <
-				&main_rgmii1_pins_default
+				&main_rmii1_pins_default
 		     	&main_rgmii2_pins_default
 		    >;
 	status = "okay";
 };
 
 &cpsw_port1 {
-	phy-mode = "rgmii-rxid";
-	phy-handle = <&cpsw3g_phy0>;
+	// phy-mode = "rgmii-rxid";
+	phy-mode = "rmii";
+	// phy-handle = <&ksz8863>;
 	status = "okay";
 	// status = "disabled";
+	// interrupt-parent = <&main_gpio1>;
+	// interrupts = <50 IRQ_TYPE_EDGE_FALLING>;
+	fixed-link {
+		speed = <100>;
+		full-duplex;
+		pause;
+	};
 };
 
 &cpsw_port2 {
@@ -1024,12 +1078,13 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_mdio1_pins_default>;
-	cpsw3g_phy0: ethernet-phy@0 {
-		reg = <2>;
-		reset-gpios = <&main_gpio1 12 GPIO_ACTIVE_LOW>;//GPIO1_12
-		reset-assert-us = <10000>;
-		reset-deassert-us = <20000>;
-	};
+	// cpsw3g_phy0: ethernet-phy@0 {
+	// 	reg = <6>;
+	// 	reset-assert-us = <10000>;
+	// 	reset-deassert-us = <20000>;
+	// 	pinctrl-names = "default";
+	// 	pinctrl-0 = <&main_ksz8863_int_default>;
+	// };
 	
 	cpsw3g_phy1: ethernet-phy@1 {
 		reg = <5>;

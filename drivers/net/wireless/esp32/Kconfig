@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0
+config WLAN_VENDOR_ESP32
+	bool "ESP32 devices"
+	default n
+
+if WLAN_VENDOR_ESP32
+source "drivers/net/wireless/esp32/esp32wroom/Kconfig"
+endif # WLAN_VENDOR_ESP32

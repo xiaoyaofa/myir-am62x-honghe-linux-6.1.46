@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0
+config WLAN_ESP32_WROOM
+	tristate
+	help
+	  Add support for the Atmel WLAN_ESP32 SoC.
+
+config WLAN_ESP32_WROOM_SDIO
+	tristate "WLAN_ESP32_WROOM SDIO"
+	depends on CFG80211 && INET && MMC
+	select WLAN_ESP32_WROOM
+	help
+		SDIO
+
+config WLAN_ESP32_WROOM_SPI
+	tristate "WLAN_ESP32_WROOM SPI"
+	depends on CFG80211 && INET && SPI
+	select WLAN_ESP32_WROOM
+	select CRC7
+	select CRC_ITU_T
+	help
+		SPI

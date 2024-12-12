@@ -12,7 +12,47 @@
 
 #include "ksz_common.h"
 
-KSZ_REGMAP_TABLE(ksz9477, not_used, 16, 0, 0);
+// KSZ_REGMAP_TABLE(ksz8863, not_used, 8, 0, 0);
+// KSZ_REGMAP_TABLE(ksz9477, not_used, 8, 24, 8);
+
+static const struct regmap_config ksz8863_regmap_config[] = {
+	{
+		.name = "#8",
+		.reg_bits = 8,
+		.pad_bits = 0,
+		.val_bits = 8,
+		.cache_type = REGCACHE_NONE,
+		.lock = ksz_regmap_lock,
+		.unlock = ksz_regmap_unlock,
+		// .val_format_endian = REGMAP_ENDIAN_LITTLE,
+		// .read_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_RD, not_used, 8, 0),
+		// .write_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_WR, not_used, 8, 0),
+	},
+	{
+		.name = "#16",
+		.reg_bits = 8,
+		.pad_bits = 0,
+		.val_bits = 16,
+		.cache_type = REGCACHE_NONE,
+		.lock = ksz_regmap_lock,
+		.unlock = ksz_regmap_unlock,
+		// .read_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_RD, not_used, 8, 0),
+		// .write_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_WR, not_used, 8, 0),
+		.val_format_endian = REGMAP_ENDIAN_BIG,
+	},
+	{
+		.name = "#32",
+		.reg_bits = 8,
+		.pad_bits = 0,
+		.val_bits = 32,
+		.cache_type = REGCACHE_NONE,
+		.lock = ksz_regmap_lock,
+		.unlock = ksz_regmap_unlock,
+		// .read_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_RD, not_used, 8, 0),
+		// .write_flag_mask = KSZ_SPI_OP_FLAG_MASK(KSZ_SPI_OP_WR, not_used, 8, 0),
+		.val_format_endian = REGMAP_ENDIAN_BIG,
+	}
+};
 
 static int ksz9477_i2c_probe(struct i2c_client *i2c,
 			     const struct i2c_device_id *i2c_id)
@@ -25,15 +65,27 @@ static int ksz9477_i2c_probe(struct i2c_client *i2c,
 	if (!dev)
 		return -ENOMEM;
 
-	for (i = 0; i < ARRAY_SIZE(ksz9477_regmap_config); i++) {
-		rc = ksz9477_regmap_config[i];
+	// for (i = 0; i < ARRAY_SIZE(ksz9477_regmap_config); i++) {
+	// 	rc = ksz9477_regmap_config[i];
+	// 	rc.lock_arg = &dev->regmap_mutex;
+	// 	dev->regmap[i] = devm_regmap_init_i2c(i2c, &rc);
+	// 	if (IS_ERR(dev->regmap[i])) {
+	// 		ret = PTR_ERR(dev->regmap[i]);
+	// 		dev_err(&i2c->dev,
+	// 			"Failed to initialize regmap%i: %d\n",
+	// 			ksz9477_regmap_config[i].val_bits, ret);
+	// 		return ret;
+	// 	}
+	// }
+	for (i = 0; i < ARRAY_SIZE(ksz8863_regmap_config); i++) {
+		rc = ksz8863_regmap_config[i];
 		rc.lock_arg = &dev->regmap_mutex;
 		dev->regmap[i] = devm_regmap_init_i2c(i2c, &rc);
 		if (IS_ERR(dev->regmap[i])) {
 			ret = PTR_ERR(dev->regmap[i]);
 			dev_err(&i2c->dev,
 				"Failed to initialize regmap%i: %d\n",
-				ksz9477_regmap_config[i].val_bits, ret);
+				ksz8863_regmap_config[i].val_bits, ret);
 			return ret;
 		}
 	}
@@ -76,7 +128,8 @@ static void ksz9477_i2c_shutdown(struct i2c_client *i2c)
 }
 
 static const struct i2c_device_id ksz9477_i2c_id[] = {
-	{ "ksz9477-switch", 0 },
+	// { "ksz9477-switch", 0 },
+	{ "ksz8863", 0 },
 	{},
 };
 

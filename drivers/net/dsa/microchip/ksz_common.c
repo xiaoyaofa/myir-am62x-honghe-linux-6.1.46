@@ -2727,11 +2727,13 @@ static int ksz_switch_detect(struct ksz_device *dev)
 	ret = ksz_read16(dev, REG_CHIP_ID0, &id16);
 	if (ret)
 		return ret;
-
+	printk(KERN_DEBUG"%s:--id16 = 0x%x-----\n",__func__ ,id16);
 	id1 = FIELD_GET(SW_FAMILY_ID_M, id16);
 	id2 = FIELD_GET(SW_CHIP_ID_M, id16);
-
-	switch (id1) {
+	printk(KERN_DEBUG"%s:--ret = %d---id1 = 0x%x  id2 = 0x%x-----\n",__func__ ,ret , id1, id2);
+	
+	switch (id1)
+	{
 	case KSZ87_FAMILY_ID:
 		if (id2 == KSZ87_CHIP_ID_95) {
 			u8 val;
@@ -2748,6 +2750,7 @@ static int ksz_switch_detect(struct ksz_device *dev)
 		}
 		break;
 	case KSZ88_FAMILY_ID:
+		printk("-----KSZ88_FAMILY_ID-----\n");
 		if (id2 == KSZ88_CHIP_ID_63)
 			dev->chip_id = KSZ8830_CHIP_ID;
 		else
