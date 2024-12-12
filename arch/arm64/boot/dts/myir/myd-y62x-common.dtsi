@@ -680,6 +680,12 @@
 			AM62X_IOPAD(0x0030, PIN_OUTPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
 		>;
 	};
+	main_tp_pins_default: main_tp_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x01c4, PIN_INPUT, 7) /* (B14) SPI0_D1.GPIO1_19.GPIO_CTP_RESET */
+			AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16.GPIO_CTP_INT */
+		>;
+	};
 };
 
 &mcu_pmx0 {
@@ -752,6 +758,7 @@
 		&main_lvds0_gpio1_pins_default
 		&main_ksz8863_reset_default
 		&main_ksz8863_int_default
+		&main_tp_pins_default
 		>;
 	status = "okay";
 };
@@ -875,6 +882,17 @@
 		};
 	};
 
+	ilitek@41 {
+		compatible = "tchip,ilitek";
+		reg = <0x41>;
+		// interrupts = <13 0x0>;
+		ilitek,irq-gpio = <&main_gpio1 16 GPIO_ACTIVE_LOW>;//GPIO1_16.GPIO_CTP_INT
+		ilitek,reset-gpio = <&main_gpio1 19 GPIO_ACTIVE_LOW>;//GPIO1_19.GPIO_CTP_RESET
+		ilitek,vbus = "vcc_i2c";
+		ilitek,vdd = "vdd";
+		ilitek,name = "ilitek_i2c";
+		status = "okay";
+	};
 };
 
 &main_i2c1 {
