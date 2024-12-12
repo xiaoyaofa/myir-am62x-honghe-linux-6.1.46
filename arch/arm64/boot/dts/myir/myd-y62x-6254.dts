@@ -87,9 +87,10 @@
 	};
     mcu_uart0_pins_default: mcu_uart0_pins_default {
 		pinctrl-single,pins = <
-            AM62X_MCU_IOPAD(0x001c, PIN_INPUT, 0) /* MCU_UART0_CTSn */
-            AM62X_MCU_IOPAD(0x0020, PIN_OUTPUT, 0) /* MCU_UART0_RTSn */
+            // AM62X_MCU_IOPAD(0x001c, PIN_INPUT, 0) /* MCU_UART0_CTSn */
+            // AM62X_MCU_IOPAD(0x0020, PIN_OUTPUT, 0) /* MCU_UART0_RTSn */
             AM62X_MCU_IOPAD(0x0018, PIN_OUTPUT, 0) /* MCU_UART0_TXD */
+            AM62X_MCU_IOPAD(0x0014, PIN_INPUT, 0) /* MCU_UART0_RXD */
         >;
 	};
 };

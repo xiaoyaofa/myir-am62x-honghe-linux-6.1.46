@@ -369,8 +369,8 @@
 
 	main_uart2_pins_default: main-uart2-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x00bc, PIN_OUTPUT, 4) /* (V24) VOUT0_DATA1.UART0_TXD */
-			AM62X_IOPAD(0x00b8, PIN_INPUT, 4) /* (U22) VOUT0_DATA0.UART0_RXD */
+			AM62X_IOPAD(0x00bc, PIN_OUTPUT, 4) /* (V24) VOUT0_DATA1.UART2_TXD */
+			AM62X_IOPAD(0x00b8, PIN_INPUT, 4) /* (U22) VOUT0_DATA0.UART2_RXD */
 			AM62X_IOPAD(0x00f0, PIN_OUTPUT, 7) /* (Y22) VOUT0_DATA14.GPIO0_59 */
 		>;
 	};
