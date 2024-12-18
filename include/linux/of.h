@@ -357,7 +357,7 @@ extern u64 of_get_cpu_hwid(struct device_node *cpun, unsigned int thread);
 
 #define for_each_property_of_node(dn, pp) \
 	for (pp = dn->properties; pp != NULL; pp = pp->next)
-
+extern const void *of_device_get_match_data(const struct device *dev);
 extern int of_n_addr_cells(struct device_node *np);
 extern int of_n_size_cells(struct device_node *np);
 extern const struct of_device_id *of_match_node(
@@ -483,6 +483,12 @@ static inline struct device_node *of_find_node_by_type(struct device_node *from,
 {
 	return NULL;
 }
+
+static inline const void *of_device_get_match_data(const struct device *dev)
+{
+        return NULL;
+}
+
 
 static inline struct device_node *of_find_matching_node_and_match(
 	struct device_node *from,
