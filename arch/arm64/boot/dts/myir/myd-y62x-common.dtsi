@@ -673,7 +673,7 @@
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0104, PIN_OUTPUT, 7) /* (AC24) VOUT0_PCLK.GPIO0_64.4G_RESET */
 			AM62X_IOPAD(0x00f8, PIN_OUTPUT, 7) /* (AB24) VOUT0_HSYNC.GPIO0_61.4G_WAKEUP */
-			// AM62X_IOPAD(0x0100, PIN_OUTPUT, 7) /* (AC25) VOUT0_VSYNC.GPIO0_63.4G_EN */
+			AM62X_IOPAD(0x0100, PIN_OUTPUT, 7) /* (AC25) VOUT0_VSYNC.GPIO0_63.4G_EN */
 		>;
 	};
 	main_wifi_en_pins_default: main_wifi_en_pins_default {
@@ -889,34 +889,6 @@
 		};
 	};
 
-	ilitek@41 {
-		compatible = "tchip,ilitek";
-		reg = <0x41>;
-		// interrupts = <13 0x0>;
-		ilitek,irq-gpio = <&main_gpio1 16 GPIO_ACTIVE_LOW>;//GPIO1_16.GPIO_CTP_INT
-		ilitek,reset-gpio = <&main_gpio1 19 GPIO_ACTIVE_LOW>;//GPIO1_19.GPIO_CTP_RESET
-		ilitek,vbus = "vcc_i2c";
-		ilitek,vdd = "vdd";
-		ilitek,name = "ilitek_i2c";
-		status = "okay";
-	};
-};
-
-&main_i2c1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&main_i2c1_pins_default>;
-	clock-frequency = <400000>;
-	status = "okay";
-	at9555: at9555@20 {
-		compatible = "analogtek,at9555";
-		reg = <0x20>;
-		#gpio-cells = <2>;
-		gpio_base = <530>;
-		interrupt-controller;
-		#interrupt-cells = <2>;
-		// status = "okay";
-		status = "disabled";
-	};
 	ksz8863: ksz8863@5f {
 		compatible = "microchip,ksz8863";
 		reg = <0x5f>;
@@ -948,6 +920,34 @@
 				};
 			};
 		};
+	};
+};
+
+&main_i2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_i2c1_pins_default>;
+	clock-frequency = <400000>;
+	status = "okay";
+	at9555: at9555@20 {
+		compatible = "analogtek,at9555";
+		reg = <0x20>;
+		#gpio-cells = <2>;
+		gpio_base = <530>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		// status = "okay";
+		status = "disabled";
+	};
+	ilitek@41 {
+		compatible = "tchip,ilitek";
+		reg = <0x41>;
+		// interrupts = <13 0x0>;
+		ilitek,irq-gpio = <&main_gpio1 16 GPIO_ACTIVE_LOW>;//GPIO1_16.GPIO_CTP_INT
+		ilitek,reset-gpio = <&main_gpio1 19 GPIO_ACTIVE_LOW>;//GPIO1_19.GPIO_CTP_RESET
+		ilitek,vbus = "vcc_i2c";
+		ilitek,vdd = "vdd";
+		ilitek,name = "ilitek_i2c";
+		status = "okay";
 	};
 };
 
