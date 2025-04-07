@@ -802,7 +802,7 @@ static void esp_reset(void)
 			gpio_set_value(resetpin, 1);
 
 			/* HOST's resetpin set to INPUT */
-			gpio_direction_input(resetpin);
+			// gpio_direction_input(resetpin);
 
 			esp_info("Triggering ESP reset.\n");
 		}
