@@ -301,10 +301,19 @@
 			default-state = "off";
 		};
 		led-gpio-4g-en {
-			label = "led-gpio-4g-en";
+			label = "gpio-4g-en";
 			pinctrl-names = "default";
 			pinctrl-0 = <&main_4g_gpio_en_pins_default>;
 			gpios = <&main_gpio0 63 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "none";
+			function = LED_FUNCTION_ACTIVITY;
+			default-state = "on";
+		};
+		led-gpio-4g-reset {
+			label = "gpio-4g-reset";
+			pinctrl-names = "default";
+			pinctrl-0 = <&main_4g_gpio_reset_pins_default>;
+			gpios = <&main_gpio0 64 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "none";
 			function = LED_FUNCTION_ACTIVITY;
 			default-state = "on";
@@ -738,13 +747,17 @@
 	// };
 	main_4g_gpio_pins_default: main_4g_gpio_pins_default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0104, PIN_OUTPUT, 7) /* (AC24) VOUT0_PCLK.GPIO0_64.4G_RESET */
 			AM62X_IOPAD(0x00f8, PIN_OUTPUT, 7) /* (AB24) VOUT0_HSYNC.GPIO0_61.4G_WAKEUP */
 		>;
 	};
 	main_4g_gpio_en_pins_default: main_4g_gpio_en_pins_default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0100, PIN_OUTPUT, 7) /* (AC25) VOUT0_VSYNC.GPIO0_63.4G_EN */
+		>;
+	};
+	main_4g_gpio_reset_pins_default: main_4g_gpio_reset_pins_default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0104, PIN_OUTPUT, 7) /* (AC24) VOUT0_PCLK.GPIO0_64.4G_RESET */
 		>;
 	};
 	main_wifi_en_pins_default: main_wifi_en_pins_default {
@@ -873,6 +886,7 @@
 		// &main_err_led_pins_default
 		&main_4g_gpio_pins_default
 		&main_4g_gpio_en_pins_default
+		&main_4g_gpio_reset_pins_default
 		&main_wifi_en_pins_default
 		&main_imx_int_pins_default
 		>;
