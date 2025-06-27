@@ -170,6 +170,5 @@ sphinx_*/
 # Rust analyzer configuration
 /rust-project.json
 
-/00_install
-/modules.sh
-/cpimage.sh
+/00_*
+/*.sh
